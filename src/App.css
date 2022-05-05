@@ -1,0 +1,7 @@
+*{
+     background-color: rgb(127, 242, 255);
+}
+.container {
+     max-width: 80%;
+     margin-inline: auto;
+   }

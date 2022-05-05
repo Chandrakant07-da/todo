@@ -1,10 +1,12 @@
-import todoForm from "./components/todoForm";
+import "./App.css";
+
+import TodoApp from "./components/TodoApp.component";
 
 const App = () => {
   return (
     <div className="container">
-      <h1>TODO Application</h1>
-      <todoForm />
+      <h1>Todo App</h1>
+      <TodoApp />
     </div>
   );
 };

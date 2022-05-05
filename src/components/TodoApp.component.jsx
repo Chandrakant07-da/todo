@@ -1,61 +1,51 @@
 import React from "react";
 
+import "./TodoApp.style.css";
 
-import todoList from "./todoList";
+import TodoItem from "./TodoItem.component";
 
-class todoForm extends React.Component {
+class TodoApp extends React.Component {
   constructor() {
     super();
     this.state = {
-      list: [],
-      input: ''
-    }
+      todos: [],
+      input: "",
+    };
   }
-
-
   inputHandler = (event) => {
     this.setState({
       input: event.target.value,
-    })
-  }
-
-
+    });
+  };
   addTodo = () => {
     this.setState((state) => {
       return {
         ...state,
-        list: [...state.list, this.state.input],
-      }
-    })
-
-
-
+        todos: [...state.todos, this.state.input],
+      };
+    });
     this.setState({
-      input:''
-    })
-  }
-
-
-
+      input: "",
+    });
+  };
   render() {
     return (
       <React.Fragment>
         <div className="add-todo">
           <input
             type="text"
-            placeholder="Add Your Todo"
+            placeholder="Add Todo"
             onChange={this.inputHandler}
             value={this.state.input}
           />
-        <button onClick={this.addTodo}>Add Youyr Todo</button>
+          <button onClick={this.addTodo}>Add Todo</button>
         </div>
-
         <div className="todos">
-          {this.state.list.map((todo, index) => {
-            return <todoList key={index} todo={todo} />;
+          {this.state.todos.map((todo, index) => {
+            return <TodoItem key={index} todo={todo} />;
           })}
           {this.state.todos.length === 0 && (
-            <div className="center">Here is Nothing to Do</div>
+            <div className="center">Nothing</div>
           )}
         </div>
       </React.Fragment>
@@ -63,4 +53,4 @@ class todoForm extends React.Component {
   }
 }
 
-export default todoForm;
+export default TodoApp;
