@@ -4,39 +4,57 @@ import "./TodoApp.style.css";
 
 import TodoItem from "./TodoItem.component";
 
+import axios from "axios";
+
 class TodoApp extends React.Component {
   constructor() {
     super();
     this.state = {
       todos: [],
-      input: "",
+      name: "",
+      description: "",
     };
   }
-  inputHandler = (event) => {
-    this.setState({
-      input: event.target.value,
-    });
+  componentDidUpdate() {
+    axios
+      .get("http://localhost:3000/show-todos")
+      .then((res) => this.setState({ todos: res.data }));
+  }
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
   addTodo = () => {
-    this.setState((state) => {
-      return {
-        ...state,
-        todos: [...state.todos, this.state.input],
-      };
-    });
-    this.setState({
-      input: "",
-    });
+    axios
+      .post("http://localhost:3000/add-todo", {
+        todoName: this.state.name,
+        todoDescription: this.state.description,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   render() {
+    console.log(this.state.todos);
     return (
       <React.Fragment>
         <div className="add-todo">
           <input
             type="text"
-            placeholder="Add Todo"
-            onChange={this.inputHandler}
-            value={this.state.input}
+            name="todoName"
+            placeholder="Add Name"
+            onChange={this.handleChange}
+            value={this.state.name}
+          />
+          <input
+            type="text"
+            name="todoDescription"
+            placeholder="Add Description"
+            onChange={this.handleChange}
+            value={this.state.description}
           />
           <button onClick={this.addTodo}>Add Todo</button>
         </div>
